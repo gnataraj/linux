@@ -1,0 +1,27 @@
+# Install Chrony on CentOS / RHEL / Fedora System
+yum install chrony -y
+
+# Configuration File of Chrony
+ cat  /etc/chrony.conf
+ 
+ # Testing Chrony
+  chronyd -q 'server 0.europe.pool.ntp.org iburst'
+  
+# Start and Enabled Chronyd Service
+  systemctl start chronyd
+  systemctl enable chronyd
+  
+ # Verify and Track Chrony Synchronization
+   chronyc tracking
+
+# Check Chrony Sources
+chronyc sources
+
+# Configure Chrony NTP Server
+local stratum 10
+allow 192.168.0.0/16
+
+sed -i "s/#local stratum 10/local stratum 10/g" /etc/chrony.conf
+sed -i "s/#allow 192.168.0.0\/16/allow 192.168.0.0\/16/" /etc/chrony.conf
+
+systemctl restart chronyd ; watch chronyc tracking
